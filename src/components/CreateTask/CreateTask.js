@@ -12,18 +12,24 @@ import {
     Input
 } from 'reactstrap';
 
-function CreateTask ({ modal, toggle }) {
+function CreateTask ({ modal, toggle, save }) {
 
     const [taskName, setTaskName] = useState('');
     const [taskDescription, setTaskDescription] = useState('');
     const handleChange = (e) => {
         const { name, value } = e.target;
         
-        if(name === "taskName") {
+        if (name === "taskName") {
             setTaskName(value)
         } else {
             setTaskDescription(value)
         } 
+    }
+    const handleSave = () => {
+        let taskObj = {}
+        taskObj["Name"] = taskName
+        taskObj["Description"] = taskDescription
+        save(taskObj)
     }
 
     return (
@@ -59,7 +65,7 @@ function CreateTask ({ modal, toggle }) {
                 </Form>
             </ModalBody>
             <ModalFooter>
-                <Button color="primary" onClick={toggle}>
+                <Button color="primary" onClick={handleSave}>
                     Create
                 </Button>{' '}
                 <Button color="secondary" onClick={toggle}>
