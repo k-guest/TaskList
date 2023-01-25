@@ -1,7 +1,6 @@
 import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
-// import TaskList from '../TaskList/TaskList';
 import CreateTask from '../CreateTask/CreateTask';
 
 function App () {
@@ -34,7 +33,6 @@ function App () {
                 <h1 className="text-light">Task List</h1>
                 <button className="btn btn-primary" onClick={() => setModal(true)}>New Task</button>
             </div>
-            {/* <TaskList /> */}
             <div className="task-list">
                 {taskList.map((obj) => <li>{obj.Name}</li>)}
             </div>
