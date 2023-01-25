@@ -2,21 +2,39 @@ import './App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState } from 'react';
 import CreateTask from '../CreateTask/CreateTask';
+import Card from '../Card/Card';
 
 function App () {
     
     const [modal, setModal] = useState(false);
+    const [taskList, setTaskList] = useState([]);
+
     const toggle = () => {
         setModal(!modal);
     }
 
-    const [taskList, setTaskList] = useState([]);
     const saveTask = (taskObj) => {
         let tempList = taskList
         tempList.push(taskObj)
         localStorage.setItem("taskList", JSON.stringify(tempList))
         setTaskList(tempList)
         setModal(false)
+    }
+
+    const updateList = (obj, index) => {
+        let tempList = taskList
+        tempList[index] = obj
+        localStorage.setItem("taskList", JSON.stringify(tempList))
+        setTaskList(tempList)
+        window.location.reload()
+    }
+
+    const deleteTask = (index) => {
+        let tempList = taskList
+        tempList.splice(index, 1)
+        localStorage.setItem("taskList", JSON.stringify(tempList))
+        setTaskList(tempList)
+        window.location.reload()
     }
 
     useEffect(() => {
@@ -34,7 +52,7 @@ function App () {
                 <button className="btn btn-primary" onClick={() => setModal(true)}>New Task</button>
             </div>
             <div className="task-list">
-                {taskList.map((obj) => <li>{obj.Name}</li>)}
+                {taskList && taskList.map((obj, index) => <Card taskObj={obj} index={index} updateList={updateList} deleteTask={deleteTask} />)}
             </div>
             <CreateTask
                 modal = {modal}

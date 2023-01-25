@@ -1,5 +1,5 @@
-import './CreateTask.scss';
-import { useState } from 'react';
+import './EditTask.scss';
+import { useEffect, useState } from 'react';
 import {
     Button,
     Modal,
@@ -12,10 +12,11 @@ import {
     Input
 } from 'reactstrap';
 
-function CreateTask ({ modal, toggle, save }) {
+function EditTask ({ modal, toggle, updateTask, taskObj }) {
 
     const [taskName, setTaskName] = useState('');
     const [taskDescription, setTaskDescription] = useState('');
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         
@@ -25,16 +26,23 @@ function CreateTask ({ modal, toggle, save }) {
             setTaskDescription(value)
         } 
     }
-    const handleSave = () => {
-        let taskObj = {}
-        taskObj["Name"] = taskName
-        taskObj["Description"] = taskDescription
-        save(taskObj)
+
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        let tempObj = {}
+        tempObj['Name'] = taskName
+        tempObj['Description'] = taskDescription
+        updateTask(tempObj)
     }
+
+    useEffect(() => {
+        setTaskName(taskObj.Name)
+        setTaskDescription(taskObj.Description)
+    }, [])
 
     return (
         <Modal isOpen={modal} toggle={toggle}>
-            <ModalHeader toggle={toggle}>Create Task</ModalHeader>
+            <ModalHeader toggle={toggle}>Update Task</ModalHeader>
             <ModalBody>
                 <Form>
                     <FormGroup>
@@ -59,11 +67,11 @@ function CreateTask ({ modal, toggle, save }) {
                 </Form>
             </ModalBody>
             <ModalFooter>
-                <Button color="primary" onClick={handleSave}>Create</Button>{' '}
+                <Button color="primary" onClick={handleUpdate}>Update</Button>{' '}
                 <Button color="secondary" onClick={toggle}>Cancel</Button>
             </ModalFooter>
         </Modal>
     );
 }
 
-export default CreateTask;
+export default EditTask;

@@ -8,3 +8,12 @@
 .app button {
     margin-top: 5px;
 }
+
+.task-list {
+    height: 400px;
+    width: 100%;
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding : 40px 100px;
+}
